@@ -1,7 +1,8 @@
+import 'package:e_commerce_app/ui/ecommerce/screens/detailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../data/entity/urunler.dart';
-import '../components/productCard.dart'; // ProductCard dosyanın yolu
+import '../../../data/ecommerce/entity/urunler.dart';
+import '../components/productCard.dart'; 
 
 class FavoriteScreen extends StatefulWidget {
   final List<Urunler> urun;
@@ -39,7 +40,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         child: Text("Favorilere eklenmiş ürün yok"),
       );
     }
-
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, 
@@ -50,29 +50,37 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       itemCount: favoriUrunler.length,
       itemBuilder: (context, index) {
         final urun = favoriUrunler[index];
-return ProductCard(
-  urun: urun,
-  isFavorite: true,
-  onAddToCart: () {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("${urun.ad} sepete eklendi")),
-    );
-  },
-  onRemoveFromFavorites: () async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> favoriIdListesi = prefs.getStringList('favoriler') ?? [];
-
-    favoriIdListesi.remove(urun.id.toString());
-    await prefs.setStringList('favoriler', favoriIdListesi);
-
-    setState(() {
-      favoriUrunler.removeAt(index);
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("${urun.ad} favorilerden çıkarıldı")),
-    );
-  },
+return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>DetailScreen(urun:urun)));
+      },
+  child: Padding(
+    padding: const EdgeInsets.only(left: 5.0,right: 5),
+    child: ProductCard(
+      urun: urun,
+      isFavorite: true,
+      onAddToCart: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${urun.ad} sepete eklendi")),
+        );
+      },
+      onRemoveFromFavorites: () async {
+        final prefs = await SharedPreferences.getInstance();
+        List<String> favoriIdListesi = prefs.getStringList('favoriler') ?? [];
+    
+        favoriIdListesi.remove(urun.id.toString());
+        await prefs.setStringList('favoriler', favoriIdListesi);
+    
+        setState(() {
+          favoriUrunler.removeAt(index);
+        });
+    
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${urun.ad} favorilerden çıkarıldı")),
+        );
+      },
+    ),
+  ),
 );
 
       },

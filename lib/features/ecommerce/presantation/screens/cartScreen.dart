@@ -1,8 +1,8 @@
-import 'package:e_commerce_app/data/entity/urunlerSepeti.dart';
-import 'package:e_commerce_app/ui/components/gradientButton.dart';
-import 'package:e_commerce_app/ui/tools/kullanici.dart';
-import 'package:e_commerce_app/ui/cubits/cartScreenCubit.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunlerSepeti.dart';
+import 'package:e_commerce_app/ui/ecommerce/components/gradientButton.dart';
+import 'package:e_commerce_app/ui/ecommerce/cubits/cartScreenCubit.dart';
 import 'package:e_commerce_app/ui/tools/appColors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +16,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  String get currentUserId => FirebaseAuth.instance.currentUser?.uid ?? '';
   @override
   void initState() {
     super.initState();
@@ -88,8 +89,7 @@ class _CartScreenState extends State<CartScreen> {
                         await context
                             .read<CartScreenCubit>()
                             .deleteAllByProductName(
-                              urunSepet.ad,
-                              kullanici_adi,
+                              urunSepet.ad,currentUserId
                             );
 
                         ScaffoldMessenger.of(context).showSnackBar(

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:e_commerce_app/data/entity/urunler.dart';
-import 'package:e_commerce_app/data/entity/urunlerResponse.dart';
-import 'package:e_commerce_app/data/entity/urunlerSepeti.dart';
-import 'package:e_commerce_app/data/entity/urunlerSepetiResponse.dart';
-import 'package:e_commerce_app/ui/tools/kullanici.dart'; 
+import 'package:e_commerce_app/data/ecommerce/entity/urunler.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunlerResponse.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunlerSepeti.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunlerSepetiResponse.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UrunlerDaoRepository {
+   String get currentUserId => FirebaseAuth.instance.currentUser?.uid ?? '';
   List<Urunler> parseUrunler(String response) {
     return UrunlerResponse.fromJson(json.decode(response)).urunler;
   }
@@ -40,7 +41,7 @@ class UrunlerDaoRepository {
       "fiyat": fiyat,
       "marka": marka,
       "siparisAdeti": siparisAdeti,
-      "kullaniciAdi": kullanici_adi, 
+      "kullaniciAdi": currentUserId, 
     };
     var response = await Dio().post(url, data: FormData.fromMap(data));
     print("Sepete Eklendi: ${response.data.toString()}");

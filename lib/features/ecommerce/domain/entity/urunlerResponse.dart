@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entity/urunler.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunler.dart';
 
 class UrunlerResponse {
   List<Urunler> urunler;

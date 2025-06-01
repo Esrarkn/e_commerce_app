@@ -1,5 +1,6 @@
-import 'package:e_commerce_app/ui/components/gradientButton.dart';
-import 'package:e_commerce_app/ui/screens/homeScreen.dart';
+import 'package:e_commerce_app/ui/auth/screens/logInPage.dart';
+import 'package:e_commerce_app/ui/ecommerce/components/gradientButton.dart';
+import 'package:e_commerce_app/ui/ecommerce/screens/homeScreen.dart';
 import 'package:e_commerce_app/ui/tools/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -75,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   if (isLastPage) {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (_) =>  HomeScreen()),
+                      MaterialPageRoute(builder: (_) =>  LogInPage()),
                       (route) => false,
                     );
                   } else {

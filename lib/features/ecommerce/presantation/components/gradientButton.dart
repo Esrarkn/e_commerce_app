@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../tools/appColors.dart';
+import '../../tools/appColors.dart';
 
 Widget gradientButton({required VoidCallback onPressed, required String text}) {
   return Container(
@@ -54,7 +54,7 @@ Widget gradientButton2({
         onTap: onPressed,
         borderRadius: BorderRadius.circular(30),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 160, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 164, vertical: 14),
           child: Text(
             text,
             style: TextStyle(

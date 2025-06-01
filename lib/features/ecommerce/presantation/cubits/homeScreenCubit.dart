@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/data/entity/urunler.dart';
-import 'package:e_commerce_app/data/repo/urunlerDaoRepository.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunler.dart';
+import 'package:e_commerce_app/data/ecommerce/repo/urunlerDaoRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenCubit extends Cubit<List<Urunler>> {

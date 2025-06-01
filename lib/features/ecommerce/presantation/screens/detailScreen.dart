@@ -1,11 +1,11 @@
-import 'package:e_commerce_app/ui/components/gradientButton.dart';
-import 'package:e_commerce_app/ui/cubits/detailScreenCubit.dart';
-import 'package:e_commerce_app/ui/tools/kullanici.dart';
+import 'package:e_commerce_app/ui/ecommerce/components/gradientButton.dart';
+import 'package:e_commerce_app/ui/ecommerce/cubits/detailScreenCubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../tools/appColors.dart';
-import '../../data/entity/urunler.dart';
+import '../../tools/appColors.dart';
+import '../../../data/ecommerce/entity/urunler.dart';
 
 class DetailScreen extends StatefulWidget {
   final Urunler urun;
@@ -33,6 +33,7 @@ class _DetailScreenState extends State<DetailScreen> {
       widget.urun.id.toString(),
     );
   }
+   String get currentUserId => FirebaseAuth.instance.currentUser?.uid ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +249,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       urun.fiyat,
                       urun.marka,
                       quantity,
-                      kullanici_adi,
+                      currentUserId,
                     );
                   },
                   text: "Sepete Ekle",

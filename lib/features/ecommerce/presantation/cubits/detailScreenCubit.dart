@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/repo/urunlerDaoRepository.dart';
+import 'package:e_commerce_app/data/ecommerce/repo/urunlerDaoRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

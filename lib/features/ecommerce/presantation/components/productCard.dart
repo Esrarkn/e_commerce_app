@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/data/entity/urunler.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunler.dart';
 import 'package:flutter/material.dart';
-import '../tools/appColors.dart';
+import '../../tools/appColors.dart';
 class ProductCard extends StatelessWidget {
   final Urunler urun;
   final VoidCallback? onAddToCart;

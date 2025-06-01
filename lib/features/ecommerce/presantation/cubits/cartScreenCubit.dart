@@ -1,20 +1,22 @@
-import 'package:e_commerce_app/data/entity/urunlerSepeti.dart';
-import 'package:e_commerce_app/data/repo/urunlerDaoRepository.dart';
-import 'package:e_commerce_app/ui/tools/kullanici.dart';
+import 'package:e_commerce_app/data/ecommerce/entity/urunlerSepeti.dart';
+import 'package:e_commerce_app/data/ecommerce/repo/urunlerDaoRepository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartScreenCubit extends Cubit<List<UrunlerSepeti>>{
   CartScreenCubit():super(<UrunlerSepeti>[]);
+
     var urunlerDaoRepository=UrunlerDaoRepository();
+     String get currentUserId => FirebaseAuth.instance.currentUser?.uid ?? '';
     //Sepetteki ürünleri getir
 Future<void> loadCartProducts() async {
-  var sepetListesi = await urunlerDaoRepository.loadCartProducts(kullanici_adi);
+  var sepetListesi = await urunlerDaoRepository.loadCartProducts(currentUserId);
   print("Sepet Listem: $sepetListesi");
   emit(sepetListesi); 
 }
 //Sepetten adet ürün sil
 Future<void> delete(int sepetId,String kullaniciAdi) async {
-  await urunlerDaoRepository.delete(sepetId,kullanici_adi);
+  await urunlerDaoRepository.delete(sepetId,currentUserId);
 }
 //Sepet adet arttırma vee azaltma
 void updateQuantity(int sepetId, int yeniAdet) {
@@ -22,7 +24,7 @@ void updateQuantity(int sepetId, int yeniAdet) {
 
   final currentList = state;
   final updatedList = currentList.map((urun) {
-    if (urun.sepetId == sepetId && urun.kullaniciAdi == kullanici_adi) {
+    if (urun.sepetId == sepetId && urun.kullaniciAdi == currentUserId) {
       return UrunlerSepeti(
         sepetId: urun.sepetId,
         ad: urun.ad,
@@ -41,11 +43,11 @@ void updateQuantity(int sepetId, int yeniAdet) {
 }
 //Sepetten aynı isimdeki tüm ürünleri sil
 Future<void> deleteAllByProductName(String urunAdi,String kullaniciAdi) async {
-  final sepetUrunleri = await urunlerDaoRepository.loadCartProducts(kullanici_adi);
+  final sepetUrunleri = await urunlerDaoRepository.loadCartProducts(currentUserId);
   final ayniUrunler = sepetUrunleri.where((urun) => urun.ad == urunAdi).toList();
 
   for (var urun in ayniUrunler) {
-    await urunlerDaoRepository.delete(urun.sepetId,kullanici_adi );
+    await urunlerDaoRepository.delete(urun.sepetId,currentUserId );
   }
 
   await loadCartProducts();
